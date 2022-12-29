@@ -1,0 +1,54 @@
+{
+    "name": "@fy-/w3",
+    "version": "0.0.1",
+    "author": "Florian 'Fy' Gasquez <m@fy.to>",
+    "license": "MIT",
+    "main": "dist/fyw3.cjs.js",
+    "module": "dist/fyw3.es.js",
+    "typings": "dist/index.d.ts",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/fyw3.es.js",
+            "require": "./dist/fyw3.cjs.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fyvue/w3.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fyvue/w3/issues"
+    },
+    "homepage": "https://github.com/fyvue/w3#readme",
+    "peerDependencies": {
+        "@fy-/core": "^0.0.x",
+        "ethers": "^5.7.x",
+        "pinia": "^2.0.x",
+        "vue": "^3.2.x"
+    },
+    "scripts": {
+        "build": "rm -rf dist/ && vite build --mode development && vue-tsc  --declaration --emitDeclarationOnly --emitDeclarationOnly --outdir ./dist",
+        "lint:check": "eslint src/ --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore"
+    },
+    "devDependencies": {
+        "@fy-/core": "workspace:*",
+        "@types/node": "^18.11.10",
+        "@vitejs/plugin-vue": "^3.2.0",
+        "@vue/compiler-sfc": "^3.2.45",
+        "@vue/server-renderer": "^3.2.45",
+        "eslint": "^8.29.0",
+        "ethers": "^5.7.2",
+        "i18next": "^22.0.6",
+        "mitt": "^3.0.0",
+        "pinia": "^2.0.27",
+        "rollup": "^3.5.1",
+        "rollup-plugin-copy": "^3.4.0",
+        "typescript": "^4.9.3",
+        "unplugin-vue-components": "^0.22.11",
+        "vite": "^3.2.4",
+        "vue": "^3.2.45",
+        "vue-tsc": "^1.0.9"
+    }
+}
