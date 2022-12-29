@@ -6,6 +6,9 @@ export interface W3State {
   provider?: ethers.providers.Web3Provider;
   baseProvider?: any;
   signer?: ethers.providers.JsonRpcSigner;
+  contracts: {
+    [key: string]: ethers.Contract;
+  };
 }
 
 //const w3events = new Map<String, Function[]>();
@@ -17,8 +20,15 @@ export const useW3State = defineStore({
     provider: undefined,
     baseProvider: undefined,
     signer: undefined,
+    contracts: {},
   }),
   actions: {
+    async getContract(addr: string, abi: ethers.ContractInterface) {
+      if (!this.signer) return false;
+      if (this.contracts[addr]) return this.contracts[addr];
+      const newContract = new ethers.Contract(addr, abi, this.signer);
+      this.contracts[addr] = newContract;
+    },
     async addChainToWallet(chain: NetworkChain) {
       if (this.provider) {
         try {
