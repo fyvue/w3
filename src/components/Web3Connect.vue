@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useW3State } from "../fyw3";
+import { useFyW3 } from "../index";
 import { truncateEthAddr, fyw3Data } from "../utils";
 import { computed, onMounted } from "vue";
 import { useTranslation } from "@fy-/core";
@@ -13,8 +13,8 @@ const props = withDefaults(
   }>(),
   {}
 );
-const w3Store = useW3State();
-const wallet = computed(() => w3Store.wallet);
+const fyw3 = useFyW3();
+const wallet = computed(() => fyw3.wallet);
 let forcedChain: NetworkChain | undefined = undefined;
 if (props.forceChainByName && fyw3Data.chains[props.forceChainByName]) {
   forcedChain = fyw3Data.chains[props.forceChainByName];
@@ -22,10 +22,11 @@ if (props.forceChainByName && fyw3Data.chains[props.forceChainByName]) {
   forcedChain = props.forcedChain;
 }
 const connectW3 = async () => {
-  await w3Store.connectWallet(forcedChain, props.onConnect);
+  await fyw3.connectWallet(forcedChain, props.onConnect);
 };
 onMounted(async () => {
-  await w3Store.checkConnect(forcedChain, props.onConnect);
+  await fyw3.checkConnect(forcedChain, props.onConnect);
+  console.log(fyw3.wallet)
 });
 </script>
 <template>

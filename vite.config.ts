@@ -51,7 +51,6 @@ const config: UserConfig = {
         "vue",
         "@vue/compiler-dom",
         "vue-router",
-        "pinia",
         "ethers",
         "@fy-/core",
       ],
@@ -62,7 +61,6 @@ const config: UserConfig = {
         globals: {
           vue: "Vue",
           "@vue/compiler-dom": "VueCompilerDOM",
-          pinia: "pinia",
           ethers: "ethers",
           "@fy-/core": "fyCore",
         },

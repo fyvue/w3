@@ -1,11 +1,17 @@
 import { FyWeb3Data } from "./types";
-
+import { Ref } from "vue";
 const regexEthTruncate = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
 
-export function truncateEthAddr(address: string) {
-  if (!address) return "";
-  const match = address.match(regexEthTruncate);
-  if (!match) return address;
+export type MaybeRef<T> = T | Ref<T>;
+
+export function truncateEthAddr(address: MaybeRef<string | undefined>) {
+  let _addr: string = "";
+  // @ts-ignore
+  if (typeof address == "object") _addr = address.value;
+  else if (typeof address == "string") _addr = address;
+  if (!_addr) return "";
+  const match = _addr.match(regexEthTruncate);
+  if (!match) return _addr;
   return `${match[1]}…${match[2]}`;
 }
 
