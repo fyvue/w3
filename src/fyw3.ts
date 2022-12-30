@@ -1,17 +1,6 @@
 import { ethers } from "ethers";
 import { defineStore, Pinia } from "pinia";
-import type { NetworkChain } from "./types";
-export interface W3State {
-  wallet?: string;
-  provider?: ethers.providers.Web3Provider;
-  baseProvider?: any;
-  signer?: ethers.providers.JsonRpcSigner;
-  contracts: {
-    [key: string]: ethers.Contract;
-  };
-}
-
-//const w3events = new Map<String, Function[]>();
+import type { NetworkChain, W3State } from "./types";
 
 export const useW3State = defineStore({
   id: "w3State",
@@ -73,7 +62,7 @@ export const useW3State = defineStore({
       if (forcedChain.chainId == currentChain) return;
       return await this.changeCurrentChain(forcedChain.chainId, forcedChain);
     },
-    async checkConnect(forcedChain?: NetworkChain) {
+    async checkConnect(forcedChain?: NetworkChain, onConnect?: Function) {
       if (!this.wallet) {
         if (typeof window !== "undefined") {
           let w3Provider = null;
@@ -99,11 +88,12 @@ export const useW3State = defineStore({
               this.checkForcedChain(forcedChain);
             }
             this.registerEvents(forcedChain);
+            if (onConnect) onConnect();
           }
         }
       }
     },
-    async connectWallet(forcedChain?: NetworkChain) {
+    async connectWallet(forcedChain?: NetworkChain, onConnect?: Function) {
       if (typeof window !== "undefined") {
         let w3Provider = null;
 
@@ -125,6 +115,7 @@ export const useW3State = defineStore({
         if (this.wallet && forcedChain) {
           this.checkForcedChain(forcedChain);
           this.registerEvents(forcedChain);
+          if (onConnect) onConnect();
         }
       }
     },

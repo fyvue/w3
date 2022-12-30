@@ -1,6 +1,6 @@
 {
     "name": "@fy-/w3",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Florian 'Fy' Gasquez <m@fy.to>",
     "license": "MIT",
     "main": "dist/fyw3.cjs.js",

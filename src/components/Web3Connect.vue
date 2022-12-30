@@ -9,6 +9,7 @@ const props = withDefaults(
   defineProps<{
     forceChainByName?: string;
     forcedChain?: NetworkChain;
+    onConnect?: Function;
   }>(),
   {}
 );
@@ -21,17 +22,25 @@ if (props.forceChainByName && fyw3Data.chains[props.forceChainByName]) {
   forcedChain = props.forcedChain;
 }
 const connectW3 = async () => {
-  await w3Store.connectWallet(forcedChain);
+  await w3Store.connectWallet(forcedChain, props.onConnect);
 };
 onMounted(async () => {
-  await w3Store.checkConnect(forcedChain);
+  await w3Store.checkConnect(forcedChain, props.onConnect);
 });
 </script>
 <template>
   <div>
-    <button class="btn primary" @click="connectW3" v-if="!wallet">
-      {{ $t("w3_connect") }}
-    </button>
-    <div class="btn disabled" v-else>Welcome {{ truncateEthAddr(wallet) }}</div>
+    <template v-if="!wallet">
+      <slot name="disconnected">
+        <button class="btn primary" @click="connectW3">
+          {{ $t("w3_connect") }}
+        </button>
+      </slot>
+    </template>
+    <template v-else>
+      <slot name="connected" v-bind:data="wallet">
+        <div class="btn disabled">Welcome {{ truncateEthAddr(wallet) }}</div>
+      </slot>
+    </template>
   </div>
 </template>
