@@ -26,12 +26,12 @@ const connectW3 = async () => {
 };
 onMounted(async () => {
   await fyw3.checkConnect(forcedChain, props.onConnect);
-  console.log(fyw3.wallet)
+  console.log(fyw3.wallet);
 });
 </script>
 <template>
   <div>
-    <template v-if="!wallet">
+    <template v-if="!wallet.value">
       <slot name="disconnected">
         <button class="btn primary" @click="connectW3">
           {{ $t("w3_connect") }}
@@ -39,8 +39,10 @@ onMounted(async () => {
       </slot>
     </template>
     <template v-else>
-      <slot name="connected" v-bind:data="wallet">
-        <div class="btn disabled">Welcome {{ truncateEthAddr(wallet) }}</div>
+      <slot name="connected" v-bind:data="wallet.value">
+        <div class="btn disabled">
+          Welcome {{ truncateEthAddr(wallet.value) }}
+        </div>
       </slot>
     </template>
   </div>

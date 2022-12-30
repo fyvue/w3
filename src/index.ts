@@ -2,7 +2,7 @@ import Web3Connect from "./components/Web3Connect.vue";
 import { FyWeb3 } from "./fyw3";
 import type { App, Plugin } from "vue";
 import { inject } from "vue";
-
+import { truncateEthAddr } from "./utils";
 declare module "vue" {
   export interface GlobalComponents {
     Web3Connect: typeof import("./components/Web3Connect.vue")["default"];
@@ -26,4 +26,4 @@ const useFyW3 = () => {
   return fyw3;
 };
 
-export { Web3Connect, useFyW3, createFyW3 };
+export { Web3Connect, useFyW3, createFyW3, truncateEthAddr };
