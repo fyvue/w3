@@ -17,6 +17,8 @@ export const useW3State = defineStore({
       if (this.contracts[addr]) return this.contracts[addr];
       const newContract = new ethers.Contract(addr, abi, this.signer);
       this.contracts[addr] = newContract;
+
+      return this.contracts[addr];
     },
     async addChainToWallet(chain: NetworkChain) {
       if (this.provider) {
